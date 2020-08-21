@@ -49,6 +49,7 @@ public class OpenController
     @Autowired
     private RoleService roleService;
 
+    RestTemplate restTemplate = new RestTemplate();
     /**
      * This endpoint always anyone to create an account with the default role of USER. That role is hardcoded in this method.
      *
@@ -91,6 +92,8 @@ public class OpenController
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 
+
+
         // return the access token
         // To get the access token, surf to the endpoint /login just as if a client had done this.
         // You cannot use a port when on Heroku
@@ -100,7 +103,11 @@ public class OpenController
         {
             port = ":" + httpServletRequest.getLocalPort();
         }
-        String requestURI = "http://" + httpServletRequest.getServerName() + port + "/login";
+//        String requestURI = "http://" + httpServletRequest.getServerName() + port + "/login";
+
+        String requestURI = "http://" + httpServletRequest.getServerName() +
+                (httpServletRequest.getServerName().equalsIgnoreCase("localhost") ? ":" + httpServletRequest.getLocalPort() : "") +
+                "/login";
 
         List<MediaType> acceptableMediaTypes = new ArrayList<>();
         acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
