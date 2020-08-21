@@ -49,6 +49,7 @@ public class OpenController
     @Autowired
     private RoleService roleService;
 
+    RestTemplate restTemplate = new RestTemplate();
     /**
      * This endpoint always anyone to create an account with the default role of USER. That role is hardcoded in this method.
      *
